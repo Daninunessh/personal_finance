@@ -1,0 +1,45 @@
+name: CI - Personal Finance API
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+
+  build-and-test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout do código
+        uses: actions/checkout@v6
+
+      - name: Configurar Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Verificar versão do Java
+        run: java -version
+
+      - name: Executar testes
+        run: mvn clean test
+
+      - name: Build da aplicação
+        run: mvn clean package -DskipTests
+
+      - name: Upload do JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: personal-finance-api
+          path: target/*.jar
