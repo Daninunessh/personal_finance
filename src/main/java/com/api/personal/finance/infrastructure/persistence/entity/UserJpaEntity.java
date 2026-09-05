@@ -1,5 +1,6 @@
-package com.api.personal.finance.infrastructure.persistence;
+package com.api.personal.finance.infrastructure.persistence.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,12 +10,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Entity
 @Table(name = "users")
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,13 +27,18 @@ public class UserJpaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false, unique = true)
     private String email;
 
+    @Column(nullable = false)
     private String password;
 
-    private LocalDateTime createdAt;
+    @Column(nullable = false, updatable = false)
+    private Instant createdAt;
 
-    private LocalDateTime updatedAt;
+    @Column(nullable = false)
+    private Instant updatedAt;
 }
