@@ -1,13 +1,14 @@
-package com.api.personal.finance.application.dto;
+package com.api.personal.finance.presentation.dto.response;
 
 import com.api.personal.finance.domain.entity.User;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Builder
 @Getter
@@ -19,10 +20,10 @@ public class UserResponse {
     private Long id;
     private String name;
     private String email;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private Instant createdAt;
+    private Instant updatedAt;
 
-    public static UserResponse from(User user) {
+    public static UserResponse fromDomain(User user) {
         return UserResponse.builder()
                 .id(user.getId())
                 .name(user.getName())
