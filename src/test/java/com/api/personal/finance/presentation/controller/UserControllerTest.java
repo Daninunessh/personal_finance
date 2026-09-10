@@ -6,7 +6,6 @@ import com.api.personal.finance.presentation.dto.request.UserChangePasswordReque
 import com.api.personal.finance.presentation.dto.request.UserRequest;
 import com.api.personal.finance.presentation.dto.request.UserUpdateRequest;
 import com.api.personal.finance.presentation.dto.response.UserResponse;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -35,7 +34,6 @@ class UserControllerTest {
     private UserController userController;
 
     @Test
-    @DisplayName("GetAllUsers deve retornar status 200 OK e lista de DTOs")
     void shouldGetAllUsers() {
         User user = new User(1L, "João", "joao@email.com", "pass", Instant.now(), Instant.now());
         when(userUseCase.getAllUsers()).thenReturn(List.of(user));
@@ -48,7 +46,6 @@ class UserControllerTest {
     }
 
     @Test
-    @DisplayName("GetUserById deve retornar status 200 OK com o usuário")
     void shouldGetUserById() {
         User user = new User(1L, "João", "joao@email.com", "pass", Instant.now(), Instant.now());
         when(userUseCase.getUserById(1L)).thenReturn(user);
@@ -60,7 +57,6 @@ class UserControllerTest {
     }
 
     @Test
-    @DisplayName("CreateUser deve cadastrar e retornar status 201 Created com header Location")
     void shouldCreateUser() {
         MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
@@ -80,7 +76,6 @@ class UserControllerTest {
     }
 
     @Test
-    @DisplayName("UpdateUser deve retornar status 204 No Content")
     void shouldUpdateUser() {
         UserUpdateRequest request = new UserUpdateRequest();
         request.setName("João");
@@ -93,7 +88,6 @@ class UserControllerTest {
     }
 
     @Test
-    @DisplayName("ChangePassword deve retornar status 204 No Content")
     void shouldChangePassword() {
         UserChangePasswordRequest request = new UserChangePasswordRequest();
         request.setOldPassword("oldPass");
@@ -106,7 +100,6 @@ class UserControllerTest {
     }
 
     @Test
-    @DisplayName("DeleteUser deve retornar status 204 No Content")
     void shouldDeleteUser() {
         ResponseEntity<Void> response = userController.deleteUser(1L);
 
