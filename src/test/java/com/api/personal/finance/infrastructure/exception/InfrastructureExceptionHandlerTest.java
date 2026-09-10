@@ -5,7 +5,6 @@ import com.api.personal.finance.domain.exception.EmailAlreadyExistsException;
 import com.api.personal.finance.domain.exception.InvalidPasswordException;
 import com.api.personal.finance.domain.exception.UserNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -37,7 +36,6 @@ class InfrastructureExceptionHandlerTest {
     private BindingResult bindingResult;
 
     @Test
-    @DisplayName("Deve tratar UserNotFoundException com NOT_FOUND")
     void shouldHandleUserNotFoundException() {
         when(request.getRequestURI()).thenReturn("/users/1");
 
@@ -49,7 +47,6 @@ class InfrastructureExceptionHandlerTest {
     }
 
     @Test
-    @DisplayName("Deve tratar EmailAlreadyExistsException com CONFLICT")
     void shouldHandleEmailAlreadyExistsException() {
         when(request.getRequestURI()).thenReturn("/users");
 
@@ -60,7 +57,6 @@ class InfrastructureExceptionHandlerTest {
     }
 
     @Test
-    @DisplayName("Deve tratar InvalidPasswordException com UNAUTHORIZED")
     void shouldHandleInvalidPasswordException() {
         when(request.getRequestURI()).thenReturn("/users/1/password");
 
@@ -71,7 +67,6 @@ class InfrastructureExceptionHandlerTest {
     }
 
     @Test
-    @DisplayName("Deve tratar DomainException genérica com BAD_REQUEST")
     void shouldHandleDomainException() {
         when(request.getRequestURI()).thenReturn("/users");
 
@@ -82,7 +77,6 @@ class InfrastructureExceptionHandlerTest {
     }
 
     @Test
-    @DisplayName("Deve tratar MethodArgumentNotValidException com UNPROCESSABLE_ENTITY")
     void shouldHandleValidationError() {
         when(request.getRequestURI()).thenReturn("/users");
         FieldError fieldError = new FieldError("userRequest", "email", "E-mail em formato inválido");
@@ -96,7 +90,6 @@ class InfrastructureExceptionHandlerTest {
     }
 
     @Test
-    @DisplayName("Deve tratar DataIntegrityViolationException com CONFLICT")
     void shouldHandleDataIntegrityViolation() {
         when(request.getRequestURI()).thenReturn("/users");
 
@@ -107,7 +100,6 @@ class InfrastructureExceptionHandlerTest {
     }
 
     @Test
-    @DisplayName("Deve tratar Exception genérica com INTERNAL_SERVER_ERROR")
     void shouldHandleGenericException() {
         when(request.getRequestURI()).thenReturn("/users");
 

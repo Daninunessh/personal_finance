@@ -1,7 +1,6 @@
 package com.api.personal.finance.domain.entity;
 
 import com.api.personal.finance.domain.exception.InvalidDomainAttributeException;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -14,7 +13,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class UserTest {
 
     @Test
-    @DisplayName("Deve criar um usuário válido com todas as propriedades")
     void shouldCreateValidUser() {
         Instant now = Instant.now();
         User user = new User(1L, "João", "joao@email.com", "encodedPass", now, now);
@@ -28,7 +26,6 @@ class UserTest {
     }
 
     @Test
-    @DisplayName("Deve inicializar createdAt e updatedAt com Instant.now() quando forem nulos")
     void shouldInitializeDatesWhenNullInConstructor() {
         User user = new User(null, "João", "joao@email.com", "encodedPass", null, null);
 
@@ -38,7 +35,6 @@ class UserTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"", "   "})
-    @DisplayName("Deve lançar exceção quando o nome for vazio ou apenas espaços")
     void shouldThrowExceptionWhenNameIsInvalid(String invalidName) {
         assertThatThrownBy(() -> new User(1L, invalidName, "joao@email.com", "pass", null, null))
                 .isInstanceOf(InvalidDomainAttributeException.class)
@@ -46,7 +42,6 @@ class UserTest {
     }
 
     @Test
-    @DisplayName("Deve lançar exceção quando o nome for nulo")
     void shouldThrowExceptionWhenNameIsNull() {
         assertThatThrownBy(() -> new User(1L, null, "joao@email.com", "pass", null, null))
                 .isInstanceOf(InvalidDomainAttributeException.class)
@@ -55,7 +50,6 @@ class UserTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"invalid-email", "joao@", "@email.com", "joao.com"})
-    @DisplayName("Deve lançar exceção para formatos de e-mail inválidos")
     void shouldThrowExceptionWhenEmailIsInvalidFormat(String invalidEmail) {
         assertThatThrownBy(() -> new User(1L, "João", invalidEmail, "pass", null, null))
                 .isInstanceOf(InvalidDomainAttributeException.class)
@@ -63,7 +57,6 @@ class UserTest {
     }
 
     @Test
-    @DisplayName("Deve lançar exceção quando e-mail for nulo")
     void shouldThrowExceptionWhenEmailIsNull() {
         assertThatThrownBy(() -> new User(1L, "João", null, "pass", null, null))
                 .isInstanceOf(InvalidDomainAttributeException.class)
@@ -71,7 +64,6 @@ class UserTest {
     }
 
     @Test
-    @DisplayName("Deve atualizar as informações do usuário com sucesso")
     void shouldUpdateInfoSuccessfully() {
         User user = new User(1L, "João", "joao@email.com", "pass", Instant.now(), Instant.now());
         Instant updateTime = Instant.now().plusSeconds(10);
@@ -84,7 +76,6 @@ class UserTest {
     }
 
     @Test
-    @DisplayName("Deve usar Instant.now() no updateInfo caso updatedAt fornecido seja nulo")
     void shouldUpdateInfoWithDefaultNowWhenTimeIsNull() {
         User user = new User(1L, "João", "joao@email.com", "pass", Instant.now(), Instant.now());
 
@@ -95,7 +86,6 @@ class UserTest {
     }
 
     @Test
-    @DisplayName("Deve atualizar a senha do usuário com sucesso")
     void shouldUpdatePasswordSuccessfully() {
         User user = new User(1L, "João", "joao@email.com", "pass", Instant.now(), Instant.now());
         Instant updateTime = Instant.now().plusSeconds(10);
@@ -107,7 +97,6 @@ class UserTest {
     }
 
     @Test
-    @DisplayName("Deve usar Instant.now() no updatePassword caso updatedAt fornecido seja nulo")
     void shouldUpdatePasswordWithDefaultNowWhenTimeIsNull() {
         User user = new User(1L, "João", "joao@email.com", "pass", Instant.now(), Instant.now());
 
@@ -119,7 +108,6 @@ class UserTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"", "   "})
-    @DisplayName("Deve lançar exceção ao tentar atualizar senha para valor vazio")
     void shouldThrowExceptionWhenNewPasswordIsBlank(String invalidPass) {
         User user = new User(1L, "João", "joao@email.com", "pass", Instant.now(), Instant.now());
 
@@ -129,7 +117,6 @@ class UserTest {
     }
 
     @Test
-    @DisplayName("Deve lançar exceção ao tentar atualizar senha para nulo")
     void shouldThrowExceptionWhenNewPasswordIsNull() {
         User user = new User(1L, "João", "joao@email.com", "pass", Instant.now(), Instant.now());
 

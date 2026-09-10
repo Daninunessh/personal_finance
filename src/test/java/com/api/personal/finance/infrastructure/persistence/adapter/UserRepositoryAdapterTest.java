@@ -3,7 +3,6 @@ package com.api.personal.finance.infrastructure.persistence.adapter;
 import com.api.personal.finance.domain.entity.User;
 import com.api.personal.finance.infrastructure.persistence.entity.UserJpaEntity;
 import com.api.personal.finance.infrastructure.persistence.repository.UserJpaRepository;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,14 +27,8 @@ class UserRepositoryAdapterTest {
     private UserRepositoryAdapter userRepositoryAdapter;
 
     @Test
-    @DisplayName("FindAll deve buscar todas as entidades e converter para domínio")
     void shouldFindAllUsers() {
-        UserJpaEntity entity = UserJpaEntity.builder()
-                .id(1L).name("João").email("joao@email.com").password("pass")
-                .createdAt(Instant.now()).updatedAt(Instant.now()).build();
-
-        when(userJpaRepository.findAll()).thenReturn(List.of(entity));
-
+        when(userJpaRepository.findAll()).thenReturn(List.of(getUserJpaEntity()));
         List<User> result = userRepositoryAdapter.findAll();
 
         assertThat(result).hasSize(1);
@@ -43,14 +36,8 @@ class UserRepositoryAdapterTest {
     }
 
     @Test
-    @DisplayName("FindById deve retornar Optional do domínio")
     void shouldFindById() {
-        UserJpaEntity entity = UserJpaEntity.builder()
-                .id(1L).name("João").email("joao@email.com").password("pass")
-                .createdAt(Instant.now()).updatedAt(Instant.now()).build();
-
-        when(userJpaRepository.findById(1L)).thenReturn(Optional.of(entity));
-
+        when(userJpaRepository.findById(1L)).thenReturn(Optional.of(getUserJpaEntity()));
         Optional<User> result = userRepositoryAdapter.findById(1L);
 
         assertThat(result).isPresent();
@@ -58,14 +45,8 @@ class UserRepositoryAdapterTest {
     }
 
     @Test
-    @DisplayName("FindByEmail deve retornar Optional do domínio")
     void shouldFindByEmail() {
-        UserJpaEntity entity = UserJpaEntity.builder()
-                .id(1L).name("João").email("joao@email.com").password("pass")
-                .createdAt(Instant.now()).updatedAt(Instant.now()).build();
-
-        when(userJpaRepository.findByEmail("joao@email.com")).thenReturn(Optional.of(entity));
-
+        when(userJpaRepository.findByEmail("joao@email.com")).thenReturn(Optional.of(getUserJpaEntity()));
         Optional<User> result = userRepositoryAdapter.findByEmail("joao@email.com");
 
         assertThat(result).isPresent();
@@ -73,15 +54,9 @@ class UserRepositoryAdapterTest {
     }
 
     @Test
-    @DisplayName("Save deve persistir e retornar o domínio salvo")
     void shouldSaveUser() {
         User domain = new User(1L, "João", "joao@email.com", "pass", Instant.now(), Instant.now());
-        UserJpaEntity entity = UserJpaEntity.builder()
-                .id(1L).name("João").email("joao@email.com").password("pass")
-                .createdAt(Instant.now()).updatedAt(Instant.now()).build();
-
-        when(userJpaRepository.save(any(UserJpaEntity.class))).thenReturn(entity);
-
+        when(userJpaRepository.save(any(UserJpaEntity.class))).thenReturn(getUserJpaEntity());
         User saved = userRepositoryAdapter.save(domain);
 
         assertThat(saved).isNotNull();
@@ -89,10 +64,19 @@ class UserRepositoryAdapterTest {
     }
 
     @Test
-    @DisplayName("DeleteById deve chamar deleção no repositório JPA")
     void shouldDeleteById() {
         userRepositoryAdapter.deleteById(1L);
-
         verify(userJpaRepository).deleteById(1L);
+    }
+
+    private static UserJpaEntity getUserJpaEntity() {
+        return UserJpaEntity.builder()
+                .id(1L)
+                .name("João")
+                .email("joao@email.com")
+                .password("pass")
+                .createdAt(Instant.now())
+                .updatedAt(Instant.now())
+                .build();
     }
 }
