@@ -1,8 +1,10 @@
 package com.api.personal.finance.infrastructure.config;
 
 import com.api.personal.finance.application.usecase.AccountUseCase;
+import com.api.personal.finance.application.usecase.CategoryUseCase;
 import com.api.personal.finance.application.usecase.UserUseCase;
 import com.api.personal.finance.domain.repository.AccountRepository;
+import com.api.personal.finance.domain.repository.CategoryRepository;
 import com.api.personal.finance.domain.repository.UserRepository;
 import com.api.personal.finance.domain.security.PasswordEncoderPort;
 import org.springframework.context.annotation.Bean;
@@ -19,5 +21,10 @@ public class BeanConfiguration {
     @Bean
     public AccountUseCase accountUseCase(AccountRepository accountRepository, UserRepository userRepository) {
         return new AccountUseCase(accountRepository, userRepository);
+    }
+
+    @Bean
+    public CategoryUseCase categoryUseCase(CategoryRepository categoryRepository, UserRepository userRepository) {
+        return new CategoryUseCase(categoryRepository, userRepository);
     }
 }

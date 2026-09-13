@@ -60,13 +60,13 @@ public class Account {
 
     private void validateName(String name) {
         if (name == null || name.trim().isEmpty()) {
-            throw new InvalidDomainAttributeException("Nome não pode ser vazio.");
+            throw new InvalidDomainAttributeException("Nome da conta não pode ser vazio.");
         }
     }
 
     private void validateType(AccountType type) {
         if (type == null) {
-            throw new InvalidDomainAttributeException("Tipo não pode ser nulo.");
+            throw new InvalidDomainAttributeException("Tipo da conta não pode ser nulo.");
         }
     }
 

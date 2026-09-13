@@ -3,8 +3,7 @@ package com.api.personal.finance.application.usecase;
 import com.api.personal.finance.domain.entity.Account;
 import com.api.personal.finance.domain.entity.AccountType;
 import com.api.personal.finance.domain.entity.User;
-import com.api.personal.finance.domain.exception.AccountNotFoundException;
-import com.api.personal.finance.domain.exception.UserNotFoundException;
+import com.api.personal.finance.domain.exception.NotFoundException;
 import com.api.personal.finance.domain.repository.AccountRepository;
 import com.api.personal.finance.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -44,10 +43,10 @@ public class AccountUseCase {
 
     public Account getAccountByIdAndUserId(Long accountId, Long userId) {
         ensureUserExists(userId);
-        return accountRepository.findByIdAndUserId(accountId, userId).orElseThrow(() -> new AccountNotFoundException(accountId));
+        return accountRepository.findByIdAndUserId(accountId, userId).orElseThrow(() -> new NotFoundException("Conta não encontrada para o ID: " + accountId));
     }
 
     private User ensureUserExists(Long userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
+        return userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Usuário não encontrado para o ID: " + userId));
     }
 }

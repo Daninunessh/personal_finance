@@ -3,7 +3,7 @@ package com.api.personal.finance.infrastructure.exception;
 import com.api.personal.finance.domain.exception.DomainException;
 import com.api.personal.finance.domain.exception.EmailAlreadyExistsException;
 import com.api.personal.finance.domain.exception.InvalidPasswordException;
-import com.api.personal.finance.domain.exception.UserNotFoundException;
+import com.api.personal.finance.domain.exception.NotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -18,8 +18,8 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class InfrastructureExceptionHandler {
 
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<StandardError> userNotFound(UserNotFoundException e, HttpServletRequest request) {
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<StandardError> notFound(NotFoundException e, HttpServletRequest request) {
         HttpStatus status = HttpStatus.NOT_FOUND;
         StandardError err = new StandardError(Instant.now(), status.value(), "Recurso não encontrado", e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(err);

@@ -3,8 +3,7 @@ package com.api.personal.finance.application.usecase;
 import com.api.personal.finance.domain.entity.Account;
 import com.api.personal.finance.domain.entity.AccountType;
 import com.api.personal.finance.domain.entity.User;
-import com.api.personal.finance.domain.exception.AccountNotFoundException;
-import com.api.personal.finance.domain.exception.UserNotFoundException;
+import com.api.personal.finance.domain.exception.NotFoundException;
 import com.api.personal.finance.domain.repository.AccountRepository;
 import com.api.personal.finance.domain.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -57,7 +56,7 @@ class AccountUseCaseTest {
     void getAccountsByUserId_ShouldThrowException_WhenUserDoesNotExist() {
         when(userRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(UserNotFoundException.class, () -> accountUseCase.getAccountsByUserId(1L));
+        assertThrows(NotFoundException.class, () -> accountUseCase.getAccountsByUserId(1L));
         verify(accountRepository, never()).findByUserId(any());
     }
 
@@ -112,7 +111,7 @@ class AccountUseCaseTest {
         when(userRepository.findById(1L)).thenReturn(Optional.of(mock(User.class)));
         when(accountRepository.findByIdAndUserId(10L, 1L)).thenReturn(Optional.empty());
 
-        assertThrows(AccountNotFoundException.class, () -> accountUseCase.getAccountByIdAndUserId(10L, 1L));
+        assertThrows(NotFoundException.class, () -> accountUseCase.getAccountByIdAndUserId(10L, 1L));
     }
 
     private static Account getAccount() {
