@@ -3,7 +3,7 @@ package com.api.personal.finance.application.usecase;
 import com.api.personal.finance.domain.entity.User;
 import com.api.personal.finance.domain.exception.EmailAlreadyExistsException;
 import com.api.personal.finance.domain.exception.InvalidPasswordException;
-import com.api.personal.finance.domain.exception.UserNotFoundException;
+import com.api.personal.finance.domain.exception.NotFoundException;
 import com.api.personal.finance.domain.repository.UserRepository;
 import com.api.personal.finance.domain.security.PasswordEncoderPort;
 import org.junit.jupiter.api.Test;
@@ -59,7 +59,7 @@ class UserUseCaseTest {
         when(userRepository.findById(1L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> userUseCase.getUserById(1L))
-                .isInstanceOf(UserNotFoundException.class)
+                .isInstanceOf(NotFoundException.class)
                 .hasMessage("Usuário não encontrado para o ID: 1");
     }
 

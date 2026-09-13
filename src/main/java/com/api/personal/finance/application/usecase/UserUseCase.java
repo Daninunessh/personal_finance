@@ -2,7 +2,7 @@ package com.api.personal.finance.application.usecase;
 
 import com.api.personal.finance.domain.exception.EmailAlreadyExistsException;
 import com.api.personal.finance.domain.exception.InvalidPasswordException;
-import com.api.personal.finance.domain.exception.UserNotFoundException;
+import com.api.personal.finance.domain.exception.NotFoundException;
 import com.api.personal.finance.domain.repository.UserRepository;
 import com.api.personal.finance.domain.entity.User;
 import com.api.personal.finance.domain.security.PasswordEncoderPort;
@@ -22,7 +22,7 @@ public class UserUseCase {
     }
 
     public User getUserById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundException("Usuário não encontrado para o ID: " + id));
     }
 
     public User createUser(String name, String email, String rawPassword) {

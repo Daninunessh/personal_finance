@@ -3,7 +3,7 @@ package com.api.personal.finance.infrastructure.exception;
 import com.api.personal.finance.domain.exception.DomainException;
 import com.api.personal.finance.domain.exception.EmailAlreadyExistsException;
 import com.api.personal.finance.domain.exception.InvalidPasswordException;
-import com.api.personal.finance.domain.exception.UserNotFoundException;
+import com.api.personal.finance.domain.exception.NotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,7 +39,7 @@ class InfrastructureExceptionHandlerTest {
     void shouldHandleUserNotFoundException() {
         when(request.getRequestURI()).thenReturn("/users/1");
 
-        ResponseEntity<StandardError> response = handler.userNotFound(new UserNotFoundException(1L), request);
+        ResponseEntity<StandardError> response = handler.notFound(new NotFoundException("Usuário não encontrado para o ID: " + 1L), request);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         assertThat(response.getBody().getStatus()).isEqualTo(404);
