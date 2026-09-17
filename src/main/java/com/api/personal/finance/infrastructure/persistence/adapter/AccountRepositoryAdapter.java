@@ -7,7 +7,6 @@ import com.api.personal.finance.infrastructure.persistence.entity.UserJpaEntity;
 import com.api.personal.finance.infrastructure.persistence.mapper.AccountMapper;
 import com.api.personal.finance.infrastructure.persistence.repository.AccountJpaRepository;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -19,8 +18,6 @@ import java.util.Optional;
 public class AccountRepositoryAdapter implements AccountRepository {
 
     private final AccountJpaRepository accountJpaRepository;
-
-    @PersistenceContext
     private final EntityManager entityManager;
 
     @Override
